@@ -1,0 +1,6 @@
+{"name":"naa","email":"nazeer12allaham%40gmail.com","password":"asdasdadasdad"}
+{"name":"naa","email":"nazeer12allaham%40gmail.com","password":"asdasdadasdad"}
+{"name":"Ericsson+-+Lattakia_Afamia+Switch-EVOBSC1","email":"test%40test.com","password":""}
+{"name":"midan+-+abo+habbel","email":"test%40test.com","password":"aaaaaa"}
+{"name":"midan+-+abo+habbel","email":"test%40test.com","password":"aaaaaa"}
+

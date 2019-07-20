@@ -1,0 +1,12 @@
+extends ../layouts/app.pug
+
+block content
+    if users && users.length > 0
+        each user in users
+            ul.users.list-group
+                li.user.list-group-item.list-group-item-action
+                    h6 #{ user.name }
+                    p #{ user.email }
+    else 
+        div
+            span.badge.badge-primary No users existed

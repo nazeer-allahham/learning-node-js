@@ -1,0 +1,18 @@
+extends ../layouts/app.pug
+
+block content
+    .row
+        .col-4.mx-auto
+            .card
+                .card-body
+                    form(action="add", method="post")
+                        .form-group
+                            label(for="name")
+                            input#name(type="text", name="name", placeholder="Name").form-control
+                        .form-group
+                            label(for="email")
+                            input#email(type="email", name="email", placeholder="Email").form-control
+                        .form-group
+                            label(for="password")
+                            input#password(type="password", name="Password", placeholder="Password").form-control
+                        button(type="submit").btn.btn-secondary.btn-sm.px-3 Submit
