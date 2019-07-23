@@ -1,9 +1,22 @@
 import * as express from 'express';
 import * as BodyParser from 'body-parser';
 
-import router from './routes/web';
 import env from './environment';
+import router from './routes/web';
+import DB from './database/database';
+
 import { ErrorsController } from './controllers/errors-controller';
+
+DB.getConnection((err, connection) => {
+  if (err) {
+    console.log('DB cannot to connect', err);
+  }
+  else {
+    connection.execute('show tables', (err, result) => {
+      console.log(result);
+    })
+  }
+})
 
 const app = express();
 

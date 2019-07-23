@@ -1,0 +1,9 @@
+.form-control {
+    border-radius: 32pt;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.btn-rounded {
+    border-radius: 32pt;
+}

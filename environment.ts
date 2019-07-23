@@ -6,5 +6,10 @@ export default {
 
     root: __dirname,
     public: path.join(__dirname, 'public'),
-    database: path.join(__dirname, 'database')
+    database: path.join(__dirname, 'database'),
+    
+    DB_HOST: 'localhost',
+    DB_DATABASE: 'nodejs-learning-app',
+    DB_USERNAME: 'root',
+    DB_PASSWORD: 'root'
 }

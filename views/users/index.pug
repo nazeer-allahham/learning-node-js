@@ -5,8 +5,11 @@ block content
         each user in users
             ul.users.list-group
                 li.user.list-group-item.list-group-item-action
+                    .float-right
+                        a(href=`remove/${ user.id }`) ❎
+                        a(href=`edit/${ user.id }`) 🖍
                     h6 #{ user.name }
-                    p #{ user.email }
+                    p #{ user.email } | #{ user.country }
     else 
         div
-            span.badge.badge-primary No users existed
+            span.badge.badge-primary.mx-5 No users existed

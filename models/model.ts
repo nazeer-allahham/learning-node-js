@@ -1,11 +1,7 @@
 import { DataFactory } from './../database/data-factory';
 
-export abstract class Model {
+export interface Model {
 
-    protected className: string = this.constructor.name;
-
-    public save(): void {
-
-        DataFactory.append(this.className, this);
-    };
+    fillable(): string[];
+    save(): Promise<boolean>;
 }

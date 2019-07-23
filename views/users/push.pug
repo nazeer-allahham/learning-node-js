@@ -4,15 +4,25 @@ block content
     .row
         .col-4.mx-auto
             .card
+                .card-header
+                    h6.card-text #{ title }
                 .card-body
-                    form(action="add", method="post")
+                    form(action=`${ url }`, method="post")
                         .form-group
                             label(for="name")
-                            input#name(type="text", name="name", placeholder="Name").form-control
+                            input#name(type="text", name="name", placeholder="Name", value=`${ user ? user.name : '' }`).form-control
                         .form-group
                             label(for="email")
-                            input#email(type="email", name="email", placeholder="Email").form-control
+                            input#email(type="email", name="email", placeholder="Email", value=`${ user ? user.email : '' }`).form-control
                         .form-group
                             label(for="password")
-                            input#password(type="password", name="Password", placeholder="Password").form-control
-                        button(type="submit").btn.btn-secondary.btn-sm.px-3 Submit
+                            input#password(type="password", name="password", placeholder="Password", value=`${ user ? user.password : '' }`).form-control
+                        .form-group
+                            label(for="birthdate")
+                            input#birthdate(type="date", name="birthDate", placeholder="Birthdate", value=`${ user ? user.birthDate.toISOString().substr(0, 10) : '' }`).form-control
+                        .form-group
+                            label(for="country")
+                            select#country(name="country").form-control
+                                each op in ['United Kingdom', 'USA', 'UAE', 'KSA', 'SY']
+                                    option(value=`${ op }`, selected=user && user.country === op) #{ op }
+                        button(type="submit").btn.btn-secondary.btn-rounded.btn-sm.px-3 #{ actionTitle }
