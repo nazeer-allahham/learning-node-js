@@ -1,126 +1,143 @@
 import { Request, Response } from "express";
 
-import { Controller } from './controller';
-import { DataFactory } from './../database/data-factory';
 import { User } from "../models/user";
+import { IController } from "./controller";
 
-export class UsersController implements Controller {
+export class UsersController implements IController {
 
     /**
      * index
      */
-    public static index(request: Request, response: Response, next) {
+    public static index(request: Request, response: Response, next: any) {
 
         // response.sendFile(path.join(__dirname, '../', 'views', 'users', 'index.html'));
 
-        DataFactory.fetch<User>('users', (rows: User[]) => {
-            console.log("usersusersusersusersusersusers", rows);
-
-            response.render('users/index.pug', {
-                'users': rows
+        User.findAll()
+            .then((users: []) => {
+                return response.render("users/index.hbs", {
+                    authenticated: request["authenticated"],
+                    layout: "app",
+                    users,
+                });
+            })
+            .catch((err: any) => {
+                console.error(UsersController.LOG, "cannot to restore users from database", err);
             });
-        });
     }
 
     /**
      * create
      */
-    public static create(request: Request, response: Response, next) {
+    public static create(request: Request, response: Response, next: any) {
 
         // response.sendFile(path.join(__dirname, '../', 'views', 'users', 'add.html'));
 
-        response.render('users/push.pug', {
-            title: 'Create New User',
-            actionTitle: 'Create',
-            url: '/add'
-        })
+        response.render("users/create.hbs", {
+            actionTitle: "Create",
+            authenticated: request["authenticated"],
+            title: "Create New User",
+            url: "/users/create",
+        });
     }
 
     /**
      * save
      */
-    public static save(request: Request, response: Response, next) {
+    public static save(request: Request, response: Response, next: any) {
 
-        DataFactory.save('users', new User(
-            -1,
-            request.body.name,
-            request.body.email,
-            request.body.password,
-            request.body.birthdate,
-            request.body.country),
-            () => {
-                response.redirect('/');
-            });
+        const name = request.body.name;
+        const email = request.body.email;
+        const password = request.body.password;
+        const birthdate = request.body.birthdate;
+        const country = request.body.country;
+
+        // some validation MM
+        console.log(name,
+            email,
+            password,
+            birthdate,
+            country);
+
+        User.create({
+            birthdate,
+            country,
+            email,
+            name,
+            password,
+        }).then((data: any) => {
+            console.log(data);
+            return response.redirect("/users");
+        }).catch((err: any) => {
+            console.error(UsersController.LOG, "cannot to create user successfully", err);
+            return response.redirect("/users/create");
+        });
     }
 
     /**
      * edit
      */
-    public static edit(request: Request, response: Response, next) {
+    public static edit(request: Request, response: Response, next: any) {
 
         // response.sendFile(path.join(__dirname, '../', 'views', 'users', 'add.html'));
 
-        DataFactory.get<User>('users', 'id', request.params.id, (row: User) => {
-            console.log("UUUUUUUUserUUUUUser", row, row.birthDate.toLocaleDateString());
-
-            if (row == undefined) {
-                console.log('unable to get User :( make sure that you are right and logic is true');
-                response.redirect('/');
-                return;
-            }
-
-            response.render('users/push.pug', {
-                title: `Edit user ${request.params.id}`,
-                actionTitle: 'Update',
-                url: `/edit/${request.params.id}`,
-                user: row
+        User.findByPk(request.params.id)
+            .then((user: any) => {
+                response.render("users/create.hbs", {
+                    actionTitle: "Update",
+                    authenticated: request["authenticated"],
+                    title: `Edit user ${request.params.id}`,
+                    url: `/edit/${request.params.id}`,
+                    user,
+                });
+            })
+            .catch((err: any) => {
+                console.log(err);
+                return response.redirect("/users");
             });
-        });
     }
 
     /**
      * update
      */
-    public static update(request: Request, response: Response, next) {
+    public static update(request: Request, response: Response, next: any) {
 
-        DataFactory.get<User>('users', 'id', request.params.id, (row: User) => {
-
-            const user = new User(row.id,
-                row.name,
-                row.email,
-                row.password,
-                row.birthDate,
-                row.country);
-
-            user.name = request.body.name;
-            user.email = request.body.email;
-            user.password = request.body.password;
-            user.birthDate = request.body.birthDate;
-            user.country = request.body.country;
-
-            user.save()
-                .then((res) => {
-                    console.log('Saved successfully!');
-                    response.redirect('/');
-                })
-                .catch((err) => {
-                    response.redirect('/');
+        User.findByPk(request.params.id)
+            .then((user: User) => {
+                return user.update({
+                    birthDate: request.body.birthDate,
+                    country: request.body.country,
+                    email: request.body.email,
+                    name: request.body.name,
+                    password: request.body.password,
                 });
-        });
+            })
+            .then((e: any) => {
+                console.log(UsersController.LOG, "user updated sucessfully!!");
+                response.redirect("/users");
+            })
+            .catch((err: any) => {
+                console.log(UsersController.LOG, "cannot update user", err);
+                response.redirect(`/users/${request.params.id}/edit`);
+            });
     }
 
     /**
      * destroy
      */
-    public static destroy(request: Request, response: Response, next) {
+    public static destroy(request: Request, response: Response, next: any) {
 
-        console.log(request.params.id)
-
-        DataFactory.remove<User>('users', 'id', request.params.id, (err) => {
-            if (err) {
-                console.error('Error while destroying the User');
-            }
-            response.redirect('/');
+        User.destroy({
+            where: {
+                id: request.params.id,
+            },
+        }).then((data: any) => {
+            console.info(UsersController.LOG, "user destroyed successfully", data);
+            response.redirect("/users");
+        }).catch((err: any) => {
+            console.error("Error while destroying the User");
+            response.redirect("/users");
         });
     }
+
+    private static LOG: string = "UsersController";
 }

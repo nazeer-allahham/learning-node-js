@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-6 mx-auto">
+        <input type="text" class="form-control" placeholder="Search a user..."
+            onchange="">
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-6 mx-auto">
+        <ul class="list-group">
+            {{#each users}}
+            <li class="list-group-item list-group-item-action cursor-pointer">
+                <div class="float-right">
+                    <a class="btn btn-sm btn-rounded btn-secondary"
+                        href="users/{{this.id}}/edit">edit</a>
+                    <a class="btn btn-sm btn-rounded btn-secondary"
+                    href="users/{{this.id}}/remove">remove</a>
+                </div>
+                <h6>
+                    <span class="badge badge-primary mr-2">{{increase @index "1"}}</span>
+                    {{ this.name }}
+                </h6>
+                <p>{{ this.email }}</p>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>

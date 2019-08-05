@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">
+        <img src="/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            {{#if authenticated}}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="posts-menu" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    posts
+                </a>
+                <div class="dropdown-menu" aria-labelledby="posts-menu">
+                    <a class="dropdown-item" href="/posts">My posts</a>
+                    <a class="dropdown-item" href="/posts/create">Create post</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="comments-menu" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    comments
+                </a>
+                <div class="dropdown-menu" aria-labelledby="comments-menu">
+                    <a class="dropdown-item" href="/comments">My comments</a>
+                    {{!-- <a class="dropdown-item" href="/comments/create">Create comment</a> --}}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users">Users</a>
+            </li>
+            <li class="nav-item dropdown dropleft">
+                <a class="nav-link dropdown-toggle" href="#" id="user-menu" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    User
+                </a>
+                <div class="dropdown-menu" aria-labelledby="user-menu">
+                    {{!-- <a class="dropdown-item" href="/profile">Profile</a> --}}
+                    <a class="dropdown-item" href="javascript:void(0)" onclick="$('form#logout').submit()">Logout</a>
+                </div>
+                <form action="logout" method="post" id="logout"></form>
+            </li>
+            {{else}}
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/register">Register</a>
+            </li>
+            {{/if}}
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-6 mx-auto">
+        <div class="card">
+            <h6 class="card-header">{{ title }}</h6>
+            <div class="card-body">
+                <form action="{{ url }}" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control" value="{{{ prop user "name" }}}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" value="{{{ prop user "email" }}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input required type="password" name="password" id="password" class="form-control" value="{{{ prop user "password" }}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate">Birthdate</label>
+                        <input required type="date" name="birthdate" id="birthdate" class="form-control" value="{{{ toISODate (prop user "birthdate") }}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select required name="country" id="country" class="form-control" value="{{{ prop user "country" }}}">
+                            <option value="UK">United Kingdom</option>
+                            <option value="USA">USA</option>
+                            <option value="SY">Syria</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-rounded px-5">{{ actionTitle }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

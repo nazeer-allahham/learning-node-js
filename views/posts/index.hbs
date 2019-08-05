@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-6 mx-auto">
+        <input type="text" class="form-control" placeholder="Search a post..." onchange="">
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-6 mx-auto">
+        {{#each posts as |post|}}
+        <div class="card text-center mb-3" id="post_{{ post.id }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.body }}</p>
+            </div>
+            <div class="card-footer text-muted">
+                <div class="row">
+                    <div class="col-6 pr-1">
+                        <button class="btn btn-block btn-primary py-3 disabled" onclick="">Like</button>
+                    </div>
+                    <div class="col-6 pl-1">
+                        <button class="btn btn-block btn-dark py-3"
+                            onclick="$('#post_{{ post.id }} .leave-comment-section').toggle()">Comment</button>
+                    </div>
+                </div>
+                <div class="row mt-3 leave-comment-section" style="display: none;">
+                    <div class="col-12">
+                        <form action="/comments/create" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="comment" name="description">
+                                <input type="hidden" name="postId" value="{{post.id}}">
+                            </div>
+                            <button type="submit" class="btn btn-secondary btn-rounded w-25 float-left">OK</button>
+                        </form>
+                    </div>
+                </div>
+                <hr>
+                {{#if post.myComments }}
+                <div class="list-group">
+
+                    {{#each post.myComments as |comment|}}
+                    <div class="list-group-item list-group-item-action">
+                        {{ comment.description }}
+                    </div>
+                    {{/each}}
+                </div>
+                {{else}}
+                <div class="d-flex flex-column flex-row">
+                    <p class="text-muted">There is no comments yet.</p>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

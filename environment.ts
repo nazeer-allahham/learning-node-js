@@ -1,15 +1,18 @@
-const path = require('path');
+import path = require("path");
 
-export default {
-    port: 5555,
-    hostName: '192.168.0.98',
+export class Environment {
+    public static port = 5555;
+    public static hostName = "192.168.0.98";
 
-    root: __dirname,
-    public: path.join(__dirname, 'public'),
-    database: path.join(__dirname, 'database'),
-    
-    DB_HOST: 'localhost',
-    DB_DATABASE: 'nodejs-learning-app',
-    DB_USERNAME: 'root',
-    DB_PASSWORD: 'root'
+    public static root = __dirname;
+    public static public = path.join(__dirname, "public");
+    public static database = path.join(__dirname, "database");
+    public static models = path.join(__dirname, "models");
+
+    public static DB_DRIVER = "mysql";
+    public static DB_HOST = "localhost";
+    public static DB_PORT = 3306;
+    public static DB_DATABASE = "nodejs-learning-app";
+    public static DB_USERNAME = "root";
+    public static DB_PASSWORD = "root";
 }

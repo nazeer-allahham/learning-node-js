@@ -1,9 +1,22 @@
-.form-control {
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+/* .form-control {
     border-radius: 32pt;
     padding-top: 0;
     padding-bottom: 0;
-}
+} */
 
 .btn-rounded {
     border-radius: 32pt;
+}
+
+.navbar-nav > .nav-item {
+    text-transform: uppercase;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }

@@ -1,3 +1,3 @@
-export interface Controller {
-    
+// tslint:disable-next-line: no-empty-interface
+export interface IController {
 }
