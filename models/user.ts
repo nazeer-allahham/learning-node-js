@@ -1,5 +1,6 @@
+import { AllowNull, AutoIncrement, Column, DataType, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+
 import { Post } from "./post";
-import { AllowNull, AutoIncrement, Column, DataType, Model, PrimaryKey, Table, HasMany } from "sequelize-typescript";
 
 @Table
 export class User extends Model<User> {

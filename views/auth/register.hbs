@@ -1,1 +1,52 @@
-<h6>Register</h6>
+<div class="row">
+    <div class="col-6 mx-auto">
+        <div class="card">
+            <h6 class="card-header">{{ title }}</h6>
+            <div class="card-body">
+                <form action="{{ url }}" method="POST">
+                    <input type="hidden" name="csrf" value="{{ csrfToken }}">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input required type="password" name="password" id="password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password-confirmation">Confirm Password</label>
+                        <input required type="password" name="confirmPassword" id="password-confirmation"
+                            class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate">Birthdate</label>
+                        <input required type="date" name="birthdate" id="birthdate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select required name="country" id="country" class="form-control">
+                            <option value="">-</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="USA">USA</option>
+                            <option value="SY">Syria</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-rounded px-5">{{ actionTitle }}</button>
+                </form>
+                {{#if errors}}
+                <div id="errors" class="errors mt-4">
+                    {{#each errors as |err|}}
+                    <div class="alert alert-danger py-1 mb-1" role="alert">
+                        {{ err }}
+                    </div>
+                    {{/each}}
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

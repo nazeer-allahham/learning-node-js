@@ -15,4 +15,6 @@ export class Environment {
     public static DB_DATABASE = "nodejs-learning-app";
     public static DB_USERNAME = "root";
     public static DB_PASSWORD = "root";
+
+    public static BCRYPT_SALT = 12;
 }

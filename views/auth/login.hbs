@@ -4,6 +4,7 @@
             <h6 class="card-header">{{ title }}</h6>
             <div class="card-body">
                 <form action="{{ url }}" method="POST">
+                    <input type="hidden" name="csrf" value="{{ csrfToken }}">
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" class="form-control" required>
@@ -15,6 +16,15 @@
 
                     <button type="submit" class="btn btn-secondary btn-rounded px-5">Signin</button>
                 </form>
+                {{#if errors}}
+                <div id="errors" class="errors mt-4">
+                    {{#each errors as |err|}}
+                    <div class="alert alert-danger py-1 mb-1" role="alert">
+                        {{ err }}
+                    </div>
+                    {{/each}}
+                </div>
+                {{/if}}
             </div>
         </div>
     </div>

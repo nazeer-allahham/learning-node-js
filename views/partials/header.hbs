@@ -41,14 +41,16 @@
                     {{!-- <a class="dropdown-item" href="/profile">Profile</a> --}}
                     <a class="dropdown-item" href="javascript:void(0)" onclick="$('form#logout').submit()">Logout</a>
                 </div>
-                <form action="logout" method="post" id="logout"></form>
+                <form action="/auth/logout" method="post" id="logout">
+                    <input type="hidden" name="csrf" value="{{ csrfToken }}">
+                </form>
             </li>
             {{else}}
             <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/auth/login">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+                <a class="nav-link" href="/auth/register">Register</a>
             </li>
             {{/if}}
         </ul>

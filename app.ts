@@ -1,16 +1,22 @@
-import * as BodyParser from "body-parser";
-import * as express from "express";
-import handlebars = require("express-handlebars");
-import session = require("express-session");
+const BodyParser = require("body-parser");
+const express = require("express");
+const handlebars = require("express-handlebars");
+const session = require("express-session");
 
 const SessionStore = require("express-session-sequelize")(session.Store);
 
-import { ErrorsController } from "./controllers/errors-controller";
-import { Repository } from "./database/repository";
-// import { Repository2 } from "./database/repository2";
-import { Environment } from "./environment";
-import User from "./models/user";
-import router from "./routes/web";
+const csrf = require("csurf")();
+
+// import { ErrorsController } from "./controllers/errors-controller";
+// import { Repository } from "./database/repository";
+// // import { Repository2 } from "./database/repository2";
+// import { Environment } from "./environment";
+// import router from "./routes/web";
+
+const Errors = require("./controllers/errors-controller").ErrorsController;
+const Repository = require("./database/repository").Repository;
+const Environment = require("./environment").Environment;
+const router = require('./routes/web');
 
 const app = express();
 
@@ -58,32 +64,22 @@ app.use(session({
   }),
 }));
 
+// Handling CSRD Attacks
+app.use(csrf);
+
 // Static files route
 app.use(express.static(Environment.public));
 
 app.use((request, response, next) => {
-  // Using the normal Cookie
-  // request["authenticated"] = ((request.get("Cookie") as string) + "").split(";").some((e: string) => {
-  //   const [key, value] = e.split("=");
-  //   return key === "authenticated" && value === "true";
-  // });
-  // Using Session
-  request["authenticated"] = request.session!["authenticated"];
-
-  User.findByPk(request.session!["token"])
-    .then((user: any) => {
-      console.log(user);
-      request["user"] = user;
-      next();
-    }).catch((err: any) => {
-      console.log(err);
-      return response.json({
-        message: "Un authorized user",
-        status: "error",
-      });
-    });
-
-  console.info("AUTHENTICATION_MIDDLEWARE => ", "User authentication status", request["authenticated"]);
+  // Hello this is the Gate keeper of our site >>>
+  // Enter with your right leg please >>>
+  // See you next MIDDLEWARE
+  console.log("+==========+==========+==========+==========+");
+  console.log("New request recieved", [
+    request.url,
+    request.method,
+  ]);
+  next();
 });
 
 // Modules routes
